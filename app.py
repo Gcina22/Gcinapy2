@@ -1,152 +1,197 @@
-import streamlit as st
 
-# 1. MUST BE THE FIRST STREAMLIT COMMAND
+import streamlit as st
+import base64
+
 st.set_page_config(
-    page_title="Innocom Smart Farming",
-    page_icon="🌱",
-    layout="wide",
-    initial_sidebar_state="collapsed"
+    page_title="Smart Farming Platform",
+    page_icon="🌽",
+    layout="wide"
 )
 
-# 2. CUSTOM CSS FOR BRANDING, HERO OVERLAY, & NAVIGATION
-st.markdown("""
+# Function to load image as base64
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# ==========================
+# BACKGROUND IMAGE
+# ==========================
+bg_image = get_base64("maize_background.jpg")
+
+page_bg = f"""
 <style>
-    /* Top Brand Bar Styling */
-    .top-brand-bar {
-        background-color: #0f2419;
-        padding: 12px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: white;
-        border-bottom: 1px solid #1e3d2b;
-    }
-    .brand-title {
-        font-weight: bold;
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    /* Top Features Row */
-    .features-row {
-        background-color: #122d1f;
-        padding: 12px 20px;
-        display: flex;
-        justify-content: space-around;
-        color: #a3b899;
-        font-size: 0.85rem;
-        border-bottom: 1px solid #1e3d2b;
-    }
-    .feature-item {
-        text-align: center;
-        cursor: pointer;
-    }
-    .feature-item:hover {
-        color: #ffffff;
-    }
 
-    /* Main Hero Text Overlay styling */
-    .hero-container {
-        text-align: center;
-        padding: 40px 20px 10px 20px;
-        margin-top: 10px;
-    }
-    .hero-title {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: #112e1f;
-        line-height: 1.2;
-        margin-bottom: 15px;
-    }
-    .hero-subtitle {
-        font-size: 1.1rem;
-        color: #4a5d4e;
-        max-width: 800px;
-        margin: 0 auto 25px auto;
-    }
+[data-testid="stAppViewContainer"] {{
+    background-image: url("data:image/jpg;base64,{bg_image}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+
+[data-testid="stHeader"] {{
+    background: rgba(0,0,0,0);
+}}
+
+.main {{
+    background: rgba(0,0,0,0);
+}}
+
+.navbar {{
+    background: rgba(0, 70, 32, 0.85);
+    padding: 12px 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}}
+
+.nav-links {{
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}}
+
+.hero {{
+    text-align: center;
+    color: white;
+    padding-top: 100px;
+    padding-bottom: 120px;
+}}
+
+.hero h1 {{
+    font-size: 55px;
+    font-weight: bold;
+}}
+
+.hero p {{
+    font-size: 22px;
+    max-width: 850px;
+    margin: auto;
+}}
+
+.read-btn {{
+    background-color: #d4af37;
+    color: black;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
+}}
+
+.feature-card {{
+    background: rgba(255,255,255,0.88);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    height: 180px;
+}}
+
+.feature-title {{
+    font-size: 20px;
+    font-weight: bold;
+    color: #14532d;
+}}
+
+.feature-text {{
+    color: #444;
+}}
 </style>
-""", unsafe_allow_html=True)
+"""
 
-# 3. TOP BRANDING BAR
+st.markdown(page_bg, unsafe_allow_html=True)
+
+# ==========================
+# NAVBAR
+# ==========================
 st.markdown("""
-<div class="top-brand-bar">
-    <div class="brand-title">🌐 Innocom Smart Farming</div>
-    <div>
-        <span style="margin-right:15px; cursor:pointer; font-size:0.9rem;">Sign in</span>
-        <button style="background-color:#4CAF50; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">Get Started</button>
+<div class="navbar">
+    <div class="nav-links">
+        <span>Home</span>
+        <span>About Us</span>
+        <span>Facilities</span>
+        <span>Media</span>
+        <span>Training Services</span>
+        <span>Tenders</span>
+        <span>Careers</span>
+        <span>Contact Us</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# 4. CORE UTILITY/SERVICES NAVIGATION BAR
+# ==========================
+# HERO SECTION
+# ==========================
 st.markdown("""
-<div class="features-row">
-    <div class="feature-item">📡<br>Satellite Data<br>Management</div>
-    <div class="feature-item">☁️<br>Climate Risk<br>Assessment</div>
-    <div class="feature-item">📈<br>Crop Yield<br>Analytics</div>
-    <div class="feature-item">💧<br>Irrigation<br>Control Panel</div>
-    <div class="feature-item">🚚<br>Field Operations<br>Logistics</div>
-    <div class="feature-item">📊<br>Market Intelligence<br>Dashboard</div>
-</div>
-""", unsafe_allow_html=True)
-
-st.write("") # Spacer
-
-# 5. MAIN HORIZONTAL NAVIGATION MENU
-nav_cols = st.columns([1, 1.2, 1.2, 1, 2.5, 1, 1.5, 1.2, 1.2])
-
-with nav_cols[0]: st.selectbox("Home", ["Overview"], label_visibility="collapsed")
-with nav_cols[1]: st.selectbox("About Us", ["Our Team", "History"], label_visibility="collapsed")
-with nav_cols[2]: st.selectbox("Facilities", ["Labs", "Fields"], label_visibility="collapsed")
-with nav_cols[3]: st.selectbox("Media", ["News", "Gallery"], label_visibility="collapsed")
-with nav_cols[4]: st.selectbox("Training & Advisory", ["Services", "Workshops"], label_visibility="collapsed")
-with nav_cols[5]: st.selectbox("Tenders", ["Active", "Archive"], label_visibility="collapsed")
-with nav_cols[6]: st.selectbox("Careers at ARC", ["Openings"], label_visibility="collapsed")
-with nav_cols[7]: st.selectbox("Contact Us", ["Offices"], label_visibility="collapsed")
-with nav_cols[8]: st.selectbox("Quick Links", ["Resources"], label_visibility="collapsed")
-
-st.divider()
-
-# 6. HERO SECTION CONTENT
-st.markdown("""
-<div class="hero-container">
-    <h1 class="hero-title">Climate change is transforming<br>maize farming with orbital data</h1>
-    <p class="hero-subtitle">
-        Monitor maize health, water status, and soil conditions from space. 
-        Innocom Smart Farming delivers actionable insights from orbit to help 
-        farmers, agronomists, and businesses adapt and thrive.
+<div class="hero">
+    <h1>Smart Farming with Orbital Data</h1>
+    <p>
+        Monitor maize health, water status, crop growth and soil conditions
+        using satellite imagery, drones and advanced analytics.
+        Deliver actionable insights for farmers, agronomists and businesses.
     </p>
+    <div class="read-btn">Read More</div>
 </div>
 """, unsafe_allow_html=True)
 
-# Centered "Read More" Button
-col_btn_l, col_btn_c, col_btn_r = st.columns([5, 2, 5])
-with col_btn_c:
-    st.button("Read More", use_container_width=True, type="primary")
+# ==========================
+# FEATURES
+# ==========================
+col1, col2, col3, col4 = st.columns(4)
 
-st.write("") # Spacer
+with col1:
+    st.markdown("""
+    <div class="feature-card">
+        <div class="feature-title">🌍 Satellite Data</div>
+        <br>
+        <div class="feature-text">
+            Real-time monitoring of crop conditions using Earth observation data.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# 7. MAIN HERO VISUAL
-st.image(
-    "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=1200", 
-    caption="Smart Orbital and Field Monitoring Solutions over Agricultural Landscapes",
-    use_container_width=True
-)
+with col2:
+    st.markdown("""
+    <div class="feature-card">
+        <div class="feature-title">🚁 Drone Analytics</div>
+        <br>
+        <div class="feature-text">
+            UAV-based crop assessment for precision agriculture.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# 8. FOOTER SECTION
-st.divider()
-footer_col1, footer_col2 = st.columns(2)
+with col3:
+    st.markdown("""
+    <div class="feature-card">
+        <div class="feature-title">💧 Irrigation Control</div>
+        <br>
+        <div class="feature-text">
+            Optimize water use and detect crop water stress.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-with footer_col1:
-    st.caption("**Innocom Geospatial (Pty) Ltd**")
-    st.caption("Democratizing agricultural geospatial technology.")
+with col4:
+    st.markdown("""
+    <div class="feature-card">
+        <div class="feature-title">📈 Yield Prediction</div>
+        <br>
+        <div class="feature-text">
+            Forecast crop performance using AI and remote sensing.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-with footer_col2:
-    st.markdown(
-        "<div style='text-align: right; color: gray; font-size: 0.8rem;'>"
-        "© 2026 Innocommunications i.e. All rights reserved."
-        "</div>", 
-        unsafe_allow_html=True
-    )
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+st.markdown("""
+<center>
+<h3 style='color:white;'>
+🌽 Precision Agriculture for Sustainable Maize Production
+</h3>
+</center>
+""", unsafe_allow_html=True)
