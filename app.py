@@ -1,6 +1,6 @@
-import streamlit as str
+import streamlit as st
 
-# Set up page configuration
+# 1. MUST BE THE FIRST STREAMLIT COMMAND
 st.set_page_config(
     page_title="Innocom Smart Farming",
     page_icon="🌱",
@@ -8,13 +8,13 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CUSTOM CSS FOR BRANDING & HEADER LAYOUT ---
+# 2. CUSTOM CSS FOR BRANDING, HERO OVERLAY, & NAVIGATION
 st.markdown("""
 <style>
     /* Top Brand Bar Styling */
     .top-brand-bar {
         background-color: #0f2419;
-        padding: 10px 20px;
+        padding: 12px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -50,10 +50,8 @@ st.markdown("""
     /* Main Hero Text Overlay styling */
     .hero-container {
         text-align: center;
-        padding: 60px 40px 20px 40px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        margin-top: 20px;
+        padding: 40px 20px 10px 20px;
+        margin-top: 10px;
     }
     .hero-title {
         font-size: 2.5rem;
@@ -71,7 +69,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- 1. TOP BRANDING BAR ---
+# 3. TOP BRANDING BAR
 st.markdown("""
 <div class="top-brand-bar">
     <div class="brand-title">🌐 Innocom Smart Farming</div>
@@ -82,7 +80,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# --- 2. CORE UTILITY/SERVICES NAVIGATION BAR ---
+# 4. CORE UTILITY/SERVICES NAVIGATION BAR
 st.markdown("""
 <div class="features-row">
     <div class="feature-item">📡<br>Satellite Data<br>Management</div>
@@ -94,8 +92,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# --- 3. MAIN HORIZONTAL NAVIGATION MENU ---
-# Using standard streamlit columns to make clickable select boxes or text links
+st.write("") # Spacer
+
+# 5. MAIN HORIZONTAL NAVIGATION MENU
 nav_cols = st.columns([1, 1.2, 1.2, 1, 2.5, 1, 1.5, 1.2, 1.2])
 
 with nav_cols[0]: st.selectbox("Home", ["Overview"], label_visibility="collapsed")
@@ -110,7 +109,7 @@ with nav_cols[8]: st.selectbox("Quick Links", ["Resources"], label_visibility="c
 
 st.divider()
 
-# --- 4. HERO SECTION CONTENT & HERO IMAGE ---
+# 6. HERO SECTION CONTENT
 st.markdown("""
 <div class="hero-container">
     <h1 class="hero-title">Climate change is transforming<br>maize farming with orbital data</h1>
@@ -127,16 +126,17 @@ col_btn_l, col_btn_c, col_btn_r = st.columns([5, 2, 5])
 with col_btn_c:
     st.button("Read More", use_container_width=True, type="primary")
 
-# Hero Background Image Showcase (Replacing the drone & overlay visuals)
-# Note: Substitute with your own local image path or actual hosted image link
+st.write("") # Spacer
+
+# 7. MAIN HERO VISUAL
 st.image(
     "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=1200", 
-    caption="Smart Orbital and Field Monitoring Solutions",
+    caption="Smart Orbital and Field Monitoring Solutions over Agricultural Landscapes",
     use_container_width=True
 )
 
-# --- 5. FOOTER SECTION ---
-st.markdown("---")
+# 8. FOOTER SECTION
+st.divider()
 footer_col1, footer_col2 = st.columns(2)
 
 with footer_col1:
