@@ -1,124 +1,116 @@
-
 import streamlit as st
-import base64
 
+# ==========================
+# PAGE CONFIGURATION
+# ==========================
 st.set_page_config(
-    page_title="Smart Farming Platform",
+    page_title="Smart Farming",
     page_icon="🌽",
     layout="wide"
 )
 
-# Function to load image as base64
-def get_base64(file_path):
-    with open(file_path, "rb") as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
 # ==========================
-# BACKGROUND IMAGE
+# CUSTOM CSS
 # ==========================
-bg_image = get_base64("maize_background.jpg")
-
-page_bg = f"""
+st.markdown("""
 <style>
 
-[data-testid="stAppViewContainer"] {{
-    background-image: url("data:image/jpg;base64,{bg_image}");
+/* Background */
+.stApp {
+    background-image: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-}}
+    background-attachment: fixed;
+}
 
-[data-testid="stHeader"] {{
-    background: rgba(0,0,0,0);
-}}
+/* Remove default Streamlit spacing */
+.block-container {
+    padding-top: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
 
-.main {{
-    background: rgba(0,0,0,0);
-}}
-
-.navbar {{
-    background: rgba(0, 70, 32, 0.85);
-    padding: 12px 30px;
+/* Navigation Bar */
+.navbar {
+    background: rgba(0, 80, 40, 0.85);
+    padding: 15px;
     border-radius: 10px;
-    margin-bottom: 30px;
-}}
+    margin-bottom: 20px;
+}
 
-.nav-links {{
+.navbar ul {
+    list-style-type: none;
     display: flex;
     justify-content: center;
     gap: 35px;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-}}
+    margin: 0;
+    padding: 0;
+}
 
-.hero {{
-    text-align: center;
+.navbar li {
     color: white;
-    padding-top: 100px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding-top: 80px;
     padding-bottom: 120px;
-}}
+    color: white;
+}
 
-.hero h1 {{
-    font-size: 55px;
-    font-weight: bold;
-}}
+.hero h1 {
+    font-size: 60px;
+    font-weight: 700;
+}
 
-.hero p {{
+.hero p {
     font-size: 22px;
-    max-width: 850px;
+    max-width: 900px;
     margin: auto;
-}}
+    background: rgba(0,0,0,0.35);
+    padding: 15px;
+    border-radius: 10px;
+}
 
-.read-btn {{
-    background-color: #d4af37;
-    color: black;
-    padding: 12px 30px;
-    border-radius: 30px;
-    font-size: 18px;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 20px;
-}}
-
-.feature-card {{
-    background: rgba(255,255,255,0.88);
+/* Feature Cards */
+.card {
+    background: rgba(255,255,255,0.9);
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 15px;
     text-align: center;
-    height: 180px;
-}}
+    min-height: 180px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+}
 
-.feature-title {{
-    font-size: 20px;
-    font-weight: bold;
-    color: #14532d;
-}}
+.card h3 {
+    color: #0b6e3b;
+}
 
-.feature-text {{
-    color: #444;
-}}
+.card p {
+    color: #333333;
+}
+
 </style>
-"""
-
-st.markdown(page_bg, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # ==========================
-# NAVBAR
+# NAVIGATION BAR
 # ==========================
 st.markdown("""
 <div class="navbar">
-    <div class="nav-links">
-        <span>Home</span>
-        <span>About Us</span>
-        <span>Facilities</span>
-        <span>Media</span>
-        <span>Training Services</span>
-        <span>Tenders</span>
-        <span>Careers</span>
-        <span>Contact Us</span>
-    </div>
+    <ul>
+        <li>Home</li>
+        <li>About Us</li>
+        <li>Facilities</li>
+        <li>Media</li>
+        <li>Training</li>
+        <li>Tenders</li>
+        <li>Careers</li>
+        <li>Contact Us</li>
+    </ul>
 </div>
 """, unsafe_allow_html=True)
 
@@ -128,70 +120,78 @@ st.markdown("""
 st.markdown("""
 <div class="hero">
     <h1>Smart Farming with Orbital Data</h1>
+
     <p>
-        Monitor maize health, water status, crop growth and soil conditions
-        using satellite imagery, drones and advanced analytics.
-        Deliver actionable insights for farmers, agronomists and businesses.
+    Monitor maize health, crop growth, soil conditions and irrigation
+    requirements using satellite imagery, drones and advanced analytics.
+    Deliver actionable insights for farmers, agronomists and agricultural
+    businesses.
     </p>
-    <div class="read-btn">Read More</div>
 </div>
 """, unsafe_allow_html=True)
 
+# Centered Button
+_, center_col, _ = st.columns([2,1,2])
+
+with center_col:
+    st.button("Read More", use_container_width=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
 # ==========================
-# FEATURES
+# FEATURE SECTION
 # ==========================
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.markdown("""
-    <div class="feature-card">
-        <div class="feature-title">🌍 Satellite Data</div>
-        <br>
-        <div class="feature-text">
-            Real-time monitoring of crop conditions using Earth observation data.
-        </div>
+    <div class="card">
+        <h3>🌍 Satellite Data</h3>
+        <p>Monitor crop performance and vegetation health using Earth observation data.</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
     st.markdown("""
-    <div class="feature-card">
-        <div class="feature-title">🚁 Drone Analytics</div>
-        <br>
-        <div class="feature-text">
-            UAV-based crop assessment for precision agriculture.
-        </div>
+    <div class="card">
+        <h3>🚁 Drone Analytics</h3>
+        <p>Collect high-resolution imagery for precision agriculture applications.</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col3:
     st.markdown("""
-    <div class="feature-card">
-        <div class="feature-title">💧 Irrigation Control</div>
-        <br>
-        <div class="feature-text">
-            Optimize water use and detect crop water stress.
-        </div>
+    <div class="card">
+        <h3>💧 Irrigation Control</h3>
+        <p>Detect crop water stress and optimize irrigation scheduling.</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col4:
     st.markdown("""
-    <div class="feature-card">
-        <div class="feature-title">📈 Yield Prediction</div>
-        <br>
-        <div class="feature-text">
-            Forecast crop performance using AI and remote sensing.
-        </div>
+    <div class="card">
+        <h3>📈 Yield Prediction</h3>
+        <p>Use AI and remote sensing data to forecast crop yield and productivity.</p>
     </div>
     """, unsafe_allow_html=True)
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
+# ==========================
+# FOOTER
+# ==========================
 st.markdown("""
-<center>
-<h3 style='color:white;'>
-🌽 Precision Agriculture for Sustainable Maize Production
-</h3>
-</center>
+<div style='text-align:center;
+            color:white;
+            background:rgba(0,0,0,0.6);
+            padding:15px;
+            border-radius:10px;'>
+
+<h3>🌽 Precision Agriculture Dashboard</h3>
+
+<p>
+Remote Sensing | GIS | UAV Analytics | Crop Monitoring | Smart Irrigation
+</p>
+
+</div>
 """, unsafe_allow_html=True)
